@@ -1,7 +1,10 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+
 import 'package:bases_web/ui/pages/counter_page.dart';
 import 'package:bases_web/ui/pages/counter_provider_page.dart';
 import 'package:bases_web/ui/pages/page_404.dart';
-import 'package:flutter/material.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -33,10 +36,17 @@ class RouteGenerator {
         Animation<double> secondaryAnimation,
         Widget child,
       ) =>
-          FadeTransition(
-        opacity: animation,
-        child: child,
-      ),
+          (kIsWeb == true)
+              ? FadeTransition(
+                  opacity: animation,
+                  child: child,
+                )
+              : CupertinoPageTransition(
+                  primaryRouteAnimation: animation,
+                  secondaryRouteAnimation: animation,
+                  child: child,
+                  linearTransition: true,
+                ),
     );
   }
 }
